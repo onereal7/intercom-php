@@ -292,11 +292,12 @@ class IntercomClient
      *
      * @param string $path
      * @param string $startingAfter
+     * @param array $options
      * @return stdClass
      */
-    public function nextCursorPage(string $path, string $startingAfter)
+    public function nextCursorPage(string $path, string $startingAfter, array $options = [])
     {
-        return $this->get($path . "?starting_after=" . $startingAfter);
+        return $this->get($path . "?starting_after=" . $startingAfter, $options);
     }
 
     /**

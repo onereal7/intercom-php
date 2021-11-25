@@ -112,14 +112,15 @@ class IntercomContacts extends IntercomResource
      *
      * @see     https://developers.intercom.com/intercom-api-reference/reference#pagination
      * @param   stdClass $pages
+     * @param   array $options
      * @return  stdClass
      * @throws  Exception
      */
-    public function nextCursor($pages)
+    public function nextCursor($pages, array $options = [])
     {
         $path = 'contacts';
         $starting_after = $pages->next->starting_after;
-        return $this->client->nextCursorPage($path, $starting_after);
+        return $this->client->nextCursorPage($path, $starting_after, $options);
     }
 
     /**
