@@ -64,7 +64,9 @@ class IntercomContacts extends IntercomResource
     }
 
     /**
-     * Permenently Deletes a single Contact based on the Intercom ID.
+     * Permenently Deletes (schedules for deletion) a single Contact based on the Intercom ID.
+     * Note that afterwards there will be 7-day grace period during which data still can be retrieved.
+     * During this period contact with the same data cannot be created or contact unarchived.
      *
      * @see    https://developers.intercom.com/intercom-api-reference/reference#delete-contact
      * @param  string $id
@@ -76,6 +78,36 @@ class IntercomContacts extends IntercomResource
     {
         $path = $this->contactPath($id);
         return $this->client->delete($path, $options);
+    }
+
+    /**
+     * Archives a single Contact based on the Intercom ID.
+     *
+     * @see    https://developers.intercom.com/intercom-api-reference/reference#archive-a-contact
+     * @param  string $id
+     * @param  array  $options
+     * @return stdClass
+     * @throws Exception
+     */
+    public function archiveContact(string $id, array $options = [])
+    {
+        $path = $this->contactPath($id) . '/archive';
+        return $this->client->post($path, $options);
+    }
+
+    /**
+     * Unarchives a single Contact based on the Intercom ID.
+     *
+     * @see    https://developers.intercom.com/intercom-api-reference/reference#unarchive-a-contact
+     * @param  string $id
+     * @param  array  $options
+     * @return stdClass
+     * @throws Exception
+     */
+    public function unarchiveContact(string $id, array $options = [])
+    {
+        $path = $this->contactPath($id) . '/unarchive';
+        return $this->client->post($path, $options);
     }
 
     /**
